@@ -23,6 +23,7 @@ function init() {
     bBtn.style.cursor = "pointer";
     bBtn.style.borderRadius = "6px";
     bBtn.className = "rendBtn";
+    bBtn.style.zIndex = "1000";
     bBtn.onclick = rend;
 }
 
