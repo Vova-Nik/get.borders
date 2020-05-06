@@ -4,35 +4,74 @@ function rend() {
 }
 
 function init() {
-    let bBtn = document.createElement("div");
+    const uho = document.createElement("div");
+    document.body.appendChild(uho);
+    uho.style.width = "20px";
+    uho.style.height = "12px";
+    uho.style.backgroundColor = "rgba(210, 210, 210, .6)";
+    uho.innerHTML = "<div class = 'mainButton'>Ha ha ha</div>";
+
+    uho.style.position = "fixed";
+    uho.style.left = "100px";
+
+    uho.classList.add("getBordersUho");
+    uho.style.zIndex = "1002";
+    const bBtn = document.querySelector(".mainButton");
+    bBtn.style.position = "absolute";
+    bBtn.style.top = "12px";
     bBtn.innerHTML = 'Show blocks';
-    document.body.appendChild(bBtn);
-    // console.log("Created", bBtn)
     bBtn.style.backgroundColor = "rgba(210, 210, 210, .6)";
-    bBtn.style.border = "2px solid blue";
-    // bBtn.style.width = "150px";
     bBtn.style.textAlign = "center";
     bBtn.style.textShadow = "1px 1px 0px rgba(240, 240, 240, 0.6)";
-   
-
     bBtn.style.padding = "4px 12px";
     bBtn.style.fontSize = "16px";
-    bBtn.style.position = "fixed";
-    bBtn.style.top = "256px";
-    bBtn.style.left = "16px";
     bBtn.style.cursor = "pointer";
-    bBtn.style.borderRadius = "6px";
     bBtn.className = "rendBtn";
     bBtn.style.zIndex = "1000";
     bBtn.onclick = rend;
-}
 
+    uho.style.cursor = "move";
+
+    uho.onmousedown = dragObj;
+    uho.ondragstart = function () {
+    return false;
+};
+
+}
 document.addEventListener('DOMContentLoaded', init);
 
-//window.addEventListener(`resize`, event => {
 setInterval(() => {
     console.log("width - ", window.screen.width);
     let bBtn = document.querySelector(".rendBtn");
     bBtn.innerHTML = `Show blocks </br> ${window.innerWidth}`;
+}, 600);
+
+
+/********************************************************************** */
+function dragObj(e) {
+    console.log("e = ", e);
+    const uho = document.querySelector(".getBordersUho");
+
+    let coords = getCoords(uho);
+    let shiftX = e.pageX - coords.left;
+    let shiftY = e.pageY - coords.top;
+
+    document.onmousemove = function (e) {
+        uho.style.left = e.pageX - shiftX + 'px';
+        uho.style.top = e.pageY - shiftY + 'px';
+    };
+
+    uho.onmouseup = function () {
+        document.onmousemove = null;
+        uho.onmouseup = null;
+    };
 }
-    , 600);
+
+function getCoords(elem) { 
+    var box = elem.getBoundingClientRect();
+    return {
+        top: box.top + pageYOffset,
+        left: box.left + pageXOffset
+    };
+
+}
