@@ -1,77 +1,92 @@
 
-function rend() {
-    [].forEach.call(document.querySelectorAll("*"), function (a) { a.style.outline = "1px solid #" + (~~(Math.random() * (1 << 24))).toString(16) });
+/*****************************outlining**************************************** */
+
+// class Outliner() {
+
+
+
+function rend(colorNum) {
+
+    showBordersColors = [
+        "rgba(0,0,0,0)",
+        "rgba(0,0,0,1)",
+        "rgba(255,0,0,1)",
+        "rgba(0,255,0,1)",
+        "rgba(0,0,255,1)",
+        "rgba(255,255,255,1)",
+    ];
+    let showBordersColor = "rgba(0,0,0,1)";
+
+    const showBordersBtn = document.querySelector(".showBordersBtn");
+    let showBordersColor_index =  parseInt(showBordersBtn.getAttribute("showBordersColor"));
+    showBordersColor_index ++;
+    if (showBordersColor_index >= showBordersColors.length)
+        showBordersColor_index = 0;
+    showBordersBtn.setAttribute("showBordersColor", showBordersColor_index);
+    showBordersColor = showBordersColors[showBordersColor_index];
+    // console.log(`index = ${showBordersColor_index}, color = ${showBordersColor}`);
+    let showBordersElems = [];
+    // showBordersElems.forEach.call(document.querySelectorAll("*"), function (a) { a.style.outline = "1px solid #" + (~~(Math.random() * (1 << 24))).toString(16) });
+    showBordersElems.forEach.call(document.querySelectorAll("*"), function (a) { a.style.outline = "1px solid " +  showBordersColor});
 }
 
+
 function init() {
-    const uho = document.createElement("div");
-    document.body.appendChild(uho);
-    uho.style.width = "20px";
-    uho.style.height = "12px";
-    uho.style.backgroundColor = "rgba(210, 210, 210, .6)";
-    uho.innerHTML = "<div class = 'mainButton'>Ha ha ha</div>";
 
-    uho.style.position = "fixed";
-    uho.style.left = "100px";
+    const showBordersBtn = document.createElement("div");
+    document.body.appendChild(showBordersBtn);
+    showBordersBtn.classList.add("showBordersBtn");
+    showBordersBtn.setAttribute("showBordersColor", "0");
 
-    uho.classList.add("getBordersUho");
-    uho.style.zIndex = "1002";
-    const bBtn = document.querySelector(".mainButton");
-    bBtn.style.position = "absolute";
-    bBtn.style.top = "12px";
-    bBtn.innerHTML = 'Show blocks';
-    bBtn.style.backgroundColor = "rgba(210, 210, 210, .6)";
-    bBtn.style.textAlign = "center";
-    bBtn.style.textShadow = "1px 1px 0px rgba(240, 240, 240, 0.6)";
-    bBtn.style.padding = "4px 12px";
-    bBtn.style.fontSize = "16px";
-    bBtn.style.cursor = "pointer";
-    bBtn.className = "rendBtn";
-    bBtn.style.zIndex = "1000";
-    bBtn.onclick = rend;
+    showBordersBtn.style.position = "fixed";
+    showBordersBtn.style.width = "40px";
+    showBordersBtn.style.top = "120px";
+    showBordersBtn.style.left = "20px";
+    showBordersBtn.innerHTML = 'Show blocks';
+    showBordersBtn.style.backgroundColor = "rgba(255, 200, 200, .6)";
+    showBordersBtn.style.textAlign = "center";
+    showBordersBtn.style.textShadow = "1px 1px 0px rgba(240, 240, 240, 0.6)";
+    showBordersBtn.style.padding = "4px 12px";
+    showBordersBtn.style.fontSize = "16px";
+    showBordersBtn.style.cursor = "pointer";
+    showBordersBtn.style.zIndex = "1000";
 
-    uho.style.cursor = "move";
+    showBordersBtn.onclick = rend;
 
-    uho.onmousedown = dragObj;
-    uho.ondragstart = function () {
-    return false;
-};
+    showBordersBtn.style.cursor = "move";
+    showBordersBtn.onmousedown = dragObj;
+    showBordersBtn.ondragstart = function () {
+        return false;
+    };
 
 }
 document.addEventListener('DOMContentLoaded', init);
 
-setInterval(() => {
-    console.log("width - ", window.screen.width);
-    let bBtn = document.querySelector(".rendBtn");
-    bBtn.innerHTML = `Show blocks </br> ${window.innerWidth}`;
-}, 600);
-
-
-/********************************************************************** */
+/*****************************dragging**************************************** */
 function dragObj(e) {
     console.log("e = ", e);
-    const uho = document.querySelector(".getBordersUho");
 
-    let coords = getCoords(uho);
+    showBordersBtn = e.srcElement;
+    let coords = getCoords(showBordersBtn);  //srcElement
     let shiftX = e.pageX - coords.left;
     let shiftY = e.pageY - coords.top;
 
     document.onmousemove = function (e) {
-        uho.style.left = e.pageX - shiftX + 'px';
-        uho.style.top = e.pageY - shiftY + 'px';
+        showBordersBtn.style.left = e.pageX - shiftX + 'px';
+        showBordersBtn.style.top = e.pageY - shiftY + 'px';
     };
 
-    uho.onmouseup = function () {
+    showBordersBtn.onmouseup = function () {
         document.onmousemove = null;
-        uho.onmouseup = null;
+        showBordersBtn.onmouseup = null;
     };
 }
 
-function getCoords(elem) { 
+function getCoords(elem) {
     var box = elem.getBoundingClientRect();
     return {
         top: box.top + pageYOffset,
         left: box.left + pageXOffset
     };
-
 }
+
