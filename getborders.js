@@ -39,7 +39,7 @@ function init() {
     showBordersBtn.setAttribute("showBordersColor", "0");
 
     showBordersBtn.style.position = "fixed";
-    showBordersBtn.style.width = "40px";
+    showBordersBtn.style.width = "80px";
     showBordersBtn.style.top = "120px";
     showBordersBtn.style.left = "20px";
     showBordersBtn.innerHTML = 'Show blocks';
