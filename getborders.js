@@ -1,10 +1,3 @@
-
-/*****************************outlining**************************************** */
-
-// class Outliner() {
-
-
-
 function rend(colorNum) {
 
     showBordersColors = [
@@ -16,7 +9,6 @@ function rend(colorNum) {
         "rgba(255,255,255,1)",
     ];
     let showBordersColor = "rgba(0,0,0,1)";
-
     const showBordersBtn = document.querySelector(".showBordersBtn");
     let showBordersColor_index =  parseInt(showBordersBtn.getAttribute("showBordersColor"));
     showBordersColor_index ++;
@@ -24,20 +16,16 @@ function rend(colorNum) {
         showBordersColor_index = 0;
     showBordersBtn.setAttribute("showBordersColor", showBordersColor_index);
     showBordersColor = showBordersColors[showBordersColor_index];
-    // console.log(`index = ${showBordersColor_index}, color = ${showBordersColor}`);
     let showBordersElems = [];
-    // showBordersElems.forEach.call(document.querySelectorAll("*"), function (a) { a.style.outline = "1px solid #" + (~~(Math.random() * (1 << 24))).toString(16) });
     showBordersElems.forEach.call(document.querySelectorAll("*"), function (a) { a.style.outline = "1px solid " +  showBordersColor});
 }
 
 
 function init() {
-
     const showBordersBtn = document.createElement("div");
     document.body.appendChild(showBordersBtn);
     showBordersBtn.classList.add("showBordersBtn");
     showBordersBtn.setAttribute("showBordersColor", "0");
-
     showBordersBtn.style.position = "fixed";
     showBordersBtn.style.width = "80px";
     showBordersBtn.style.top = "120px";
@@ -50,24 +38,21 @@ function init() {
     showBordersBtn.style.fontSize = "16px";
     showBordersBtn.style.cursor = "pointer";
     showBordersBtn.style.zIndex = "1000";
-
+    showBordersBtn.style.fontFamily = "Arial, Helvetica, sans-serif";
+    showBordersBtn.style.fontWeight = "800";
     showBordersBtn.onclick = rend;
-
-    showBordersBtn.style.cursor = "move";
     showBordersBtn.onmousedown = dragObj;
     showBordersBtn.ondragstart = function () {
-        return false;
+    return false;
     };
 
 }
 document.addEventListener('DOMContentLoaded', init);
 
-/*****************************dragging**************************************** */
+/**dragging** */
 function dragObj(e) {
-    console.log("e = ", e);
-
     showBordersBtn = e.srcElement;
-    let coords = getCoords(showBordersBtn);  //srcElement
+    let coords = getCoords(showBordersBtn);
     let shiftX = e.pageX - coords.left;
     let shiftY = e.pageY - coords.top;
 
