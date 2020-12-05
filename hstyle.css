@@ -88,3 +88,35 @@ h1 h2 h3{
 .city-population {
     width: 24%;
 }
+
+.inp{
+    margin: 2% 5%;
+}
+
+.inpinp{
+    background-color: #bbb;
+}
+
+.inp-btn{
+    background-color: #e55;
+    cursor: pointer;
+    font-size: 8px;
+    height: 10px;
+    position: relative;
+    /* z-index: 10; */
+}
+
+.inp-btn::after{
+    content: "DELETE";
+    line-height: 20px; 
+    color:black;
+    background-color: #f55;
+    width: 100px;
+    position: absolute;
+    left:-8px;
+    top:-5px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    /* z-index: 100; */
+}
